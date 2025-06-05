@@ -1,0 +1,27 @@
+<shapes type=list>
+	<ruler.pixel type=vector names=FALSE length=1 as.numeric=TRUE >217.389052162247</ruler.pixel>
+	<ruler.interval type=vector names=FALSE length=1 as.numeric=TRUE >0.5</ruler.interval>
+	<scaling.units type=vector names=FALSE length=1 as.numeric=FALSE >cm</scaling.units>
+	<scaling type=vector names=FALSE length=1 as.numeric=TRUE >0.00230002382837029</scaling>
+	<landmarks.pixel type=matrix rownames=TRUE colnames=FALSE nrow=6 ncol=2 as.numeric=TRUE >
+		01_ponta	105	715
+		02_meio	634	680
+		03_conec_inf	915	599
+		04_conec_sup	893	522
+		05_conec_dactilo_sup	603	482
+		06_conec_dactilo_inf	586	565
+	</landmarks.pixel>
+	<landmarks.scaled type=matrix rownames=TRUE colnames=FALSE nrow=6 ncol=2 as.numeric=TRUE >
+		01_ponta	0.241502501978881	-1.64451703728476
+		02_meio	1.45821510718677	-1.5640162032918
+		03_conec_inf	2.10452180295882	-1.37771427319381
+		04_conec_sup	2.05392127873467	-1.20061243840929
+		05_conec_dactilo_sup	1.38691436850729	-1.10861148527448
+		06_conec_dactilo_inf	1.34781396342499	-1.29951346302922
+	</landmarks.scaled>
+	<ruler.points type=matrix rownames=TRUE colnames=FALSE nrow=2 ncol=2 as.numeric=TRUE >
+		Ruler point 1	638	371
+		Ruler point 2	855	358
+	</ruler.points>
+</shapes>
+

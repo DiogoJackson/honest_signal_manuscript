@@ -1,0 +1,11 @@
+01_ponta
+
+02_meio
+
+03_conec_inf
+
+04_conec_sup
+
+05_conec_dactilo_sup
+
+06_conec_dactilo_inf

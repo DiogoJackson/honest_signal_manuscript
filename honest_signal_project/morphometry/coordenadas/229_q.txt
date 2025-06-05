@@ -1,0 +1,16 @@
+<shapes type=list>
+	<scaling type=logical names=FALSE length=1 as.numeric=FALSE >NA</scaling>
+	<landmarks.pixel type=matrix rownames=TRUE colnames=FALSE nrow=6 ncol=2 as.numeric=TRUE >
+		01_ponta	520	1269
+		02_meio	1041	1411
+		03_conec_inf	1354	1421
+		04_conec_sup	1356	1329
+		05_conec_dactilo_sup	1079	1160
+		06_conec_dactilo_inf	1027	1271
+	</landmarks.pixel>
+	<ruler.points type=matrix rownames=TRUE colnames=FALSE nrow=2 ncol=2 as.numeric=TRUE >
+		Ruler point 1	772	1067
+		Ruler point 2	1029	1067
+	</ruler.points>
+</shapes>
+
