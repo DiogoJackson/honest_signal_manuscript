@@ -1,16 +1,16 @@
-#Script to clean JND
-#author: Diogo Silva
-#Data: Wed Jul 20 11:35:29 2022
-#Last update: Wed Jul 20 14:35:01 2022 ------------------------------
+# Script to clean JND data
+# Author: Diogo Silva
+# Date: Wed Jul 20 11:35:29 2022
+# Last update: Wed Jul 20 14:35:01 2022 ------------------------------
 
 # Packages ----
 library(tidyverse)
 library(inspectdf)
 library(forcats)
 
-# 1. CLEAN JND uca ----
+# 1. Clean JND fiddler crab ----
 
-# 1.1. Load JND uca data ----
+# 1.1. Load JND fiddler crab data ----
 vis_results    <- read.csv("outputs/tables/01_visual-results.csv")
 
 # 1.2 Basic checks - QI uca ----------------------------------------------------
@@ -21,7 +21,7 @@ head(vis_results)             # First rows
 any(duplicated(vis_results))  # There is any duplicated rows?
 any(is.na(vis_results))       # There are NAs in the data?
 
-# Adicionando variáveis ----
+# Adding variables ----
 vis_results <- vis_results %>%
   mutate(
     body_region = case_when(
@@ -43,13 +43,13 @@ vis_results <- vis_results %>%
 
 head(vis_results)
 
-#save table JND Uca-pavo ----
+# Saving tables ----
 write.csv(vis_results,
           "outputs/tables/02_vis.results.clean.csv",
           row.names = F)
 
-#test tables ----
+# Testing tables ----
 vis_results_test  <- read.csv("outputs/tables/02_vis.results.clean.csv")
 head(vis_results_test)
 
-# FIM ---------------------------------------------------------------------
+# THE END ---------------------------------------------------------------------

@@ -1,9 +1,9 @@
-#Script to clean data_force
-#author: Diogo Silva
-#Data: Wed Jul 20 15:46:02 2022
-#Last update: Wed Jul 20 15:46:02 2022
+# Script to clean data_force
+# Author: Diogo Silva
+# Date: Wed Jul 20 15:46:02 2022
+# Last update: Wed Jul 20 15:46:02 2022
 
-#packages ----
+# Packages ----
 library(tidyverse)
 library(readxl)
 
@@ -66,15 +66,15 @@ dat_longer
 dat_clean <- dat_longer
 head(dat_clean)
 
-# 8. Save processed data -----------------------------------------------------
+# 8. Saving processed data -----------------------------------------------------
 write.csv(x = dat_clean, 
           file = "data/processed/03_data-force_clean.csv", 
           row.names = FALSE)
 
-# Test saved data
+# Testing saved data
 dat_test <- read.csv("data/processed/03_data-force_clean.csv")
 str(dat_test)
 head(dat_test)
 nrow(dat_test)
 
-# FIM ---------------------------------------------------------------------
+# THE END ---------------------------------------------------------------------

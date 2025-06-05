@@ -1,51 +1,42 @@
-#Script para unir planilha e criar data_master
-#Author: Diogo Silva
-#Data: Wed Jul 20 18:04:32 2022
-#Last update: Wed Jul 20 18:04:49 2022
+# Script to merge spreadsheets and create data_master
+# Author: Diogo Silva
+# Date: Wed Jul 20 18:04:32 2022
+# Last update: Wed Jul 20 18:04:49 2022
 
-#Packages ----
+# Packages ----
 library(tidyverse)
 
-#Import data force duas vezes ----
+#Import data ----
 vis_results  <- read.csv("outputs/tables/02_vis.results.clean.csv")
 data_force <- read.csv("data/processed/03_data-force_clean.csv")
 nrow(vis_results)
 nrow(data_force)
 
-#triplicar data force para dar match com nrows de vismodel results
-data_force2  <- data_force
-data_force3  <- data_force
-
-#unindo dados triplicados para unir com planilha de vismodel_results ----
-#rename para nao dar sobreposicao de nomes de variavel
-data_forcex3 <- bind_rows(data_force, data_force2, data_force3) %>% 
-  rename(claw_typex = claw_type,
-         body_regionx = body_region,
-         )
-
-head(data_forcex3)
-
-#Unindo data_force com vismodel_results ----
-#selecionando variaveis para eliminar variaveis duplicadas
-data_vis_force <- bind_cols(vis_results, data_forcex3)
+# Merging data_force with vismodel_results ----
+# Selecting relevant variables to avoid duplicated columns
+data_vis_force <- bind_cols(vis_results, data_force)
 data_vis_force <- dplyr::select(data_vis_force,
-                         -body_regionx,
+                         -body_region...19,
                          -identidade,
                          -carapace_type,
-                         -claw_typex,
-                         -data)
-
+                         -claw_type...20,
+                         -data) %>% 
+  rename(claw_type = claw_type...23,
+         body_region = body_region...36,
+         weight_g = weight_mg,
+         weight_mg = weight_g,
+         backgroun = substrato)
 
 data_master <- data_vis_force
 head(data_master)
 
-#Save data ----
+# Saving data ----
 write.csv(data_master,
           "data/processed/04_data_master.csv",
           row.names = F)
 
-#test data ----
+# Testing data ----
 data_master_test <- read.csv("data/processed/04_data_master.csv")
 head(data_master_test)
 
-# Fim ---------------------------------------------------------------------
+# THE END ---------------------------------------------------------------------

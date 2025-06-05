@@ -1,6 +1,6 @@
-# Script para importar refletancias procspec e criar planilha
+# Script to import reflectance files (procspec) and create a spreadsheet
 # author: Diogo Silva
-# data: Mon Jul 18 17:36:55 2022
+# date: Mon Jul 18 17:36:55 2022
 # last update:
 # Mon Jul 18 17:37:18 2022 ------------------------------
 

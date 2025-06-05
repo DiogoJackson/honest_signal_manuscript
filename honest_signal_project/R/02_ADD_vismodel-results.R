@@ -1,30 +1,27 @@
-#Script to unite vismodel and summary_cor outputs
-#author: Diogo Silva
-#Data: Sat Aug  6 13:39:58 2022 
+# Script to combine vismodel and summary_cor outputs
+# Author: Diogo Silva
+# Date: Sat Aug 06 13:39:58 2022
+# Last update: Thu Jun 05 14:10:31 2025 ------------------------------
 
-#packages ----
+# Packages ----
 library(dplyr)
 
-#Import datasets ----
-vis.all <- read.csv("outputs/tables/01_vis-all.csv")
+# Import datasets ----
+vis.fiddler <- read.csv("outputs/tables/01_vis.fiddler.csv")
 summary <- read.csv("outputs/tables/01_summary_cor.csv") %>% 
-  rename(ID = ID2) #renomeado ID2 para ID, para ser utilizado na funcao join
+  rename(ID = ID2) # Renamed ID2 to ID for use in the join function
 
-#Unir planilhas usando join() ----
-
-visual.results <- dplyr::left_join(vis.all, summary, by = "ID")
+# Join data frames using join() ----
+visual.results <- dplyr::left_join(vis.fiddler, summary, by = "ID")
 head(visual.results)
 
-#Save visual. results ----
+#Saving visual results ----
 write.csv(visual.results,
           "outputs/tables/01_visual-results.csv",
           row.names = F)
 
-#test ----
+# Testing ----
 vis.results.test <- read.csv("outputs/tables/01_visual-results.csv")
 head(vis.results.test)
 
-# FIM ---------------------------------------------------------------------
-
-  
-  
+# THE END ---------------------------------------------------------------------
