@@ -16,9 +16,7 @@ head(data_fight)
 data_km <- read_excel("data/raw/data_fight.xlsx",
                       sheet = "Kaplan-meier")
 
-#Inicialmente eu tinha realizado um glm com familia poisson uma vez que os dados sao de contagem.
-#Entretanto, eu percebi que eu precisava considerar o tempo, entao transformei a variavel tentativa de roubou e de grappling
-#para uma variavel de taxa, tentativa por minuto. Nesse caso, a variavel de taxa, a melhor distribuicao eh a gamma.
+#Nesse caso, a variavel de taxa, a melhor distribuicao eh a gamma.
 #porem como eu possuo valores de zero, o modelo so aceita valores positivos. Por isso, eu adicionei uma constante 0.001.
 
 data_fight2 <- data_fight %>%
@@ -80,6 +78,7 @@ p2.1
 m2 <- glm(roubo_min ~ tipo_quela1 + quela1, family = Gamma(link = "log"), data = data_fight2)
 summary(m2)
 
+
 #Proportion
 
 #Plot barplot ----
@@ -106,22 +105,6 @@ p3.1 <- ggplot(data = toca, aes(x = aquisicao_de_toca, y = percent, fill = tipo_
   theme(legend.position = "top")+
   annotate(geom = "text", label = "*", size = 7, x = 1, y = 100)
 p3.1
-
-# Proporções de 'Combate' entre 'brac' e 'lep'
-prop_test <- prop.test(x = c(11, 3), n = c(30, 30))  # Supondo 14 de cada grupo
-prop_test
-
-# Proporções de 'Theft' entre 'brac' e 'lep'
-prop_test2 <- prop.test(x = c(4, 5), n = c(30, 30))  # Supondo 14 de cada grupo
-prop_test2
-
-# Proporções de toca vazia entre brac e lep
-prop_test3 <- prop.test(x = c(7, 8), n = c(30, 30))  # Supondo 14 de cada grupo
-prop_test3
-
-# Proporções de 'No borrow' entre 'brac' e 'lep'
-prop_test4 <- prop.test(x = c(10, 15), n = c(30, 30))  # Supondo 14 de cada grupo
-prop_test4
 
 #Save graphics
 fig <- plot_grid(p3.1, p1.1, ncol = 2, 
