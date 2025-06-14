@@ -4,26 +4,26 @@
 # last update:
 # Mon Jul 18 17:37:18 2022 ------------------------------
 
-#Packages ----
+# Packages ----
 library(tidyverse)
 library(pavo)
 library(colorspec)
 
-#Import procspec data ----
+# 1. Import procspec data ----
 refletancias <- getspec("data/raw/refletancias",                 
                                 ext=c("procspec","txt"), 
                                 decimal=",", 
                                 lim=c(300,700))
 refletancias <- fixspec(refletancias)
 
-#Save reflectances ----
+# 2. Save reflectances ----
 write.csv(refletancias,
           "data/raw/refletancias/00_refletancias.csv", 
           row.names = FALSE)
 
-#test saved data ----
+# 3. Test saved data ----
 reflet_test <- read.csv("data/raw/refletancias/00_refletancias.csv")
 reflet_test <- fixspec(reflet_test)
 head(reflet_test)
 
-# FIM ----
+# THE END ----

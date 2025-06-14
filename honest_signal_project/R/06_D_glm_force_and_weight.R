@@ -3,11 +3,11 @@
 # Date: Fri Dec 23 17:40:13 2022 
 # Last update: Thu Jun 05 17:25:48 2025 
 
-#Packages ----
+# Packages ----
 library(tidyverse)
 library(car)
 
-#1. import data ----
+# 1. import data ----
 data <- read.csv("data/processed/04_data_master.csv")
 glimpse(data)
 
@@ -15,7 +15,7 @@ data_qt <- data %>%  #qt = quela type
   filter(vismodel == "Fiddler crab") %>% 
   filter(body_region == "Claw")
 
-#2. Fitting model for claw weight ----------------------------------------------
+# 2. Fitting model for claw weight ----------------------------------------------
 m1.1 <- glm(weight_mg ~ size + claw_type + saturation + mean_brightness + luminance, 
           family = "gaussian", data = data_qt)
 

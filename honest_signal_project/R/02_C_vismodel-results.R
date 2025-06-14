@@ -21,7 +21,7 @@ head(vis_results)             # First rows
 any(duplicated(vis_results))  # There is any duplicated rows?
 any(is.na(vis_results))       # There are NAs in the data?
 
-# Adding variables ----
+# 2. Adding variables ----
 vis_results <- vis_results %>%
   mutate(
     body_region = case_when(
@@ -43,12 +43,12 @@ vis_results <- vis_results %>%
 
 head(vis_results)
 
-# Saving tables ----
+# 3. Saving tables ----
 write.csv(vis_results,
           "outputs/tables/02_vis.results.clean.csv",
           row.names = F)
 
-# Testing tables ----
+# 4. Testing tables ----
 vis_results_test  <- read.csv("outputs/tables/02_vis.results.clean.csv")
 head(vis_results_test)
 

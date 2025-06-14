@@ -61,12 +61,10 @@ p <- plot_grid(p1, p2,
                labels = "AUTO")
 p
 
-#5. Saving figure 3 ----
+# 5. Saving figure 3 ----
 ggsave("outputs/figures/figure_3.png",
        p,
        height = 10,
        width = 8)
 
 # THE END ---------------------------------------------------------------------
-
-

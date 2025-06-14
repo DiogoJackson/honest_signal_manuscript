@@ -1,34 +1,51 @@
-#' GLM poisson
-#' Referencia: https://www.youtube.com/watch?v=fDtj-9vBtng&t=337s
-#'
-# Mon May 15 15:06:43 2023 ------------------------------
+# Instale o pacote survival, caso ainda não tenha instalado
+#install.packages("survival")
+#install.packages("survminer")
 
-#Packages ----
+# Carregue o pacote survival e o conjunto de dados lung
 library(readxl)
+library(gridExtra)
 library(tidyverse)
 library(cowplot)
-library(pscl)
 
 #Import data ----
-data_fight <- read_excel("data/raw/data_fight.xlsx")
+data_fight <- read_excel("data/raw/data_fight.xlsx") %>% 
+  select(ID,
+         quela1, 
+         carap1, 
+         tentativa_roubo, 
+         tentativa_graping, 
+         aquisicao_de_toca, 
+         tempo_s, 
+         tipo_quela1) %>% 
+  rename(claw_size = quela1,
+         carapace_size = carap1,
+         theft = tentativa_roubo,
+         grappling = tentativa_graping,
+         burrow_acquisition = aquisicao_de_toca,
+         time_seconds = tempo_s,
+         claw_type = tipo_quela1,
+         )
 head(data_fight)
 
 data_km <- read_excel("data/raw/data_fight.xlsx",
                       sheet = "Kaplan-meier")
+data_km
 
 #Nesse caso, a variavel de taxa, a melhor distribuicao eh a gamma.
 #porem como eu possuo valores de zero, o modelo so aceita valores positivos. Por isso, eu adicionei uma constante 0.001.
 
 data_fight2 <- data_fight %>%
   mutate(
-    roubo_min = tentativa_roubo / (tempo_s / 60) + 0.001,
-    grappling_min = tentativa_graping / (tempo_s / 60) + 0.001,
+    theft_per_min = theft / (time_seconds / 60) + 0.001,
+    grappling_per_min = grappling / (time_seconds / 60) + 0.001,
   )
+head(data_fight2)
 
 #Grafico
-p1.1 <- ggplot(data_fight2, aes(quela1, grappling_min, color = tipo_quela1))+
+p1.1 <- ggplot(data_fight2, aes(claw_size, grappling_per_min, color = claw_type))+
   geom_point(size = 3, alpha = 0.9, show.legend = T)+
-  geom_smooth(aes(color = tipo_quela1), method = "glm", linetype = 1, size = 1,show.legend = F)+
+  geom_smooth(aes(color = claw_type), method = "glm", linetype = 1, size = 1,show.legend = F)+
   scale_color_manual(labels = c("Brachychelous", "Leptochelous"),
                      values = c("#ffb560","#18617b"))+
   labs(x = "Claw size (mm)", 
@@ -38,30 +55,22 @@ p1.1 <- ggplot(data_fight2, aes(quela1, grappling_min, color = tipo_quela1))+
   theme(legend.position = "top")
 p1.1
 
-p1.2 <- ggplot(data_fight2, aes(quela1, grappling_min, color = tipo_quela1))+
-  geom_point(size = 3, alpha = 0.9)+
-  geom_smooth(aes(color = tipo_quela1), method = "glm", linetype = 1, size = 1,show.legend = F)+
-  scale_color_manual(labels = c("Brachychelous", "Leptochelous"),
-                     values = c("#ffb560","#18617b"))+
-  labs(x = "Claw size (mm)", 
-       y = "Grappling per minute")+
-  guides(color = guide_legend(title = "Claw type"))+
-  theme_test(base_size = 20)+
-  theme(legend.position = "top")
-p1.2
-
-m1 <- glm(grappling_min ~ quela1 + tipo_quela1, family = Gamma(link = "log"), data = data_fight2)
+m1 <- glm(grappling_per_min ~ claw_size + claw_type, family = Gamma(link = "log"), data = data_fight2)
 summary(m1)
 
+library(DHARMa)  # Se não tiver: install.packages("DHARMa")
+
+sim_res <- simulateResiduals(m1)
+plot(sim_res)  # Se os resíduos seguirem a linha reta, o modelo está OK
 ####################################################################
 # GLM Tentativa roubo -----#########################################
 ####################################################################
 
 # Criando o gráfico
 
-p2.1 <- ggplot(data_fight2, aes(quela1, roubo_min, color = tipo_quela1))+
+p2.1 <- ggplot(data_fight2, aes(claw_size, theft_per_min, color = claw_type))+
   geom_point(size = 3, alpha = 0.9)+
-  geom_smooth(aes(color = tipo_quela1), method = "glm", linetype = 1, size = 1)+
+  geom_smooth(aes(color = claw_type), method = "glm", linetype = 1, size = 1)+
   scale_color_manual(labels = c("Brachychelous", "Leptochelous"),
                      values = c("#ffb560","#18617b"))+
   labs(x = "Claw size (mm)", y = "Robbery attempt per minute")+
@@ -77,9 +86,6 @@ p2.1
 
 m2 <- glm(roubo_min ~ tipo_quela1 + quela1, family = Gamma(link = "log"), data = data_fight2)
 summary(m2)
-
-
-#Proportion
 
 #Plot barplot ----
 
@@ -108,18 +114,17 @@ p3.1
 
 #Save graphics
 fig <- plot_grid(p3.1, p1.1, ncol = 2, 
-                  labels = "AUTO", 
-                  align = "vh",
-                  label_size = 18)
+                 labels = "AUTO", 
+                 align = "vh",
+                 label_size = 18)
 
 fig
 
 ggsave(plot = fig, 
-       filename = "outputs/figures/competitive_strategy.png",
+       filename = "outputs/figures/Fig_8_competitive_strategy.png",
        width = 11, 
        height = 5.5, 
        dpi = 300)
 
 
-##################################
-
+# THE END -----------------------------------------------------------------

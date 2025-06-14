@@ -9,11 +9,11 @@ library(dplyr)
 library(tibble)
 library(colorspec)
 
-# Import rspec data ----
+# 1. Import rspec data ----
 reflet <- read.csv("data/raw/refletancias/00_refletancias.csv")
 reflet <- fixspec(reflet)
 
-# Calculating brightness, hue, and saturation ----
+# 2. Calculating brightness, hue, and saturation ----
 summary_cor <- summary(reflet, subset = c("S8","B2","H1","S1")) %>% 
   tibble::rownames_to_column(var = "ID2") %>% 
    dplyr::rename(saturation = S8,
@@ -22,7 +22,7 @@ summary_cor <- summary(reflet, subset = c("S8","B2","H1","S1")) %>%
   dplyr::filter(ID2 != "substrato_barradorio")
 summary_cor
 
-# Saving ----
+# 3. Saving ----
 write.csv(summary_cor,
           "outputs/tables/01_summary_cor.csv",
           row.names = F)

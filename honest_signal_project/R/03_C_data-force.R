@@ -7,10 +7,10 @@
 library(tidyverse)
 library(readxl)
 
-# Load data ---------------------------------------------------------------
+# 1. Load data ---------------------------------------------------------------
 data_force <- read_excel("data/raw/data_force.xlsx")
 
-# 1. Basic checks --------------------------------------------------------------
+# 2. Basic checks --------------------------------------------------------------
 nrow(data_force)             # How many rows
 str(data_force)              # Variables classes
 attributes(data_force)       # Attributres
@@ -27,7 +27,7 @@ dat <- dplyr::rename(data_force,
 head(dat)
 str(dat)
 
-# 3. Fix factor variables-------------------------------------------------------
+# 4. Fix factor variables-------------------------------------------------------
 
 levels(dat$claw_type)                               #horario is not a factor, then return NULL
 dat$claw_type <- as.factor(dat$claw_type)
@@ -41,22 +41,22 @@ levels(dat$autotomy)
 dat$autotomy <- as.factor(dat$autotomy)
 levels(dat$autotomy)
 
-# 3.1 fix factor names---
+# 4. fix factor names---
 levels(dat$claw_type)[levels(dat$claw_type) == "brachy"] <- "Brachychelous"
 levels(dat$claw_type)[levels(dat$claw_type) == "lepto"] <- "Leptochelous"
 
 levels(dat$carapace_color)[levels(dat$carapace_color) == "b"] <- "Bright"
 levels(dat$carapace_color)[levels(dat$carapace_color) == "e"] <- "Dark"
 
-# check factors
+# 5. check factors
 levels(dat$claw_type)
 levels(dat$carapace_color)
 
-# 4. inspect NAs-----------------------------------------------------------------
+# 6. inspect NAs-----------------------------------------------------------------
 na_check <- inspectdf::inspect_na(dat) # Percentage of NA in each columns
 na_check
 
-#5. Transform claw and carapace size to just one variable ----
+# 7. Transform claw and carapace size to just one variable ----
 dat_longer <- pivot_longer(dat, 
                            cols =c("Carapace","Claw"), 
                            names_to = "body_region", 
@@ -71,7 +71,7 @@ write.csv(x = dat_clean,
           file = "data/processed/03_data-force_clean.csv", 
           row.names = FALSE)
 
-# Testing saved data
+# 9. Testing saved data
 dat_test <- read.csv("data/processed/03_data-force_clean.csv")
 str(dat_test)
 head(dat_test)

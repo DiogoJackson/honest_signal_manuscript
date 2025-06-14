@@ -6,21 +6,21 @@
 # Packages ----
 library(dplyr)
 
-# Import datasets ----
+# 1. Import datasets ----
 vis.fiddler <- read.csv("outputs/tables/01_vis.fiddler.csv")
 summary <- read.csv("outputs/tables/01_summary_cor.csv") %>% 
   rename(ID = ID2) # Renamed ID2 to ID for use in the join function
 
-# Join data frames using join() ----
+# 2. Join data frames using join() ----
 visual.results <- dplyr::left_join(vis.fiddler, summary, by = "ID")
 head(visual.results)
 
-#Saving visual results ----
+# 3. Saving visual results ----
 write.csv(visual.results,
           "outputs/tables/01_visual-results.csv",
           row.names = F)
 
-# Testing ----
+# 4. Testing ----
 vis.results.test <- read.csv("outputs/tables/01_visual-results.csv")
 head(vis.results.test)
 

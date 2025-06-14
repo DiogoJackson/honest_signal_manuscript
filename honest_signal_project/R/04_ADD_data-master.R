@@ -6,13 +6,13 @@
 # Packages ----
 library(tidyverse)
 
-#Import data ----
+# 1. Import data ----
 vis_results  <- read.csv("outputs/tables/02_vis.results.clean.csv")
 data_force <- read.csv("data/processed/03_data-force_clean.csv")
 nrow(vis_results)
 nrow(data_force)
 
-# Merging data_force with vismodel_results ----
+# 2. Merging data_force with vismodel_results ----
 # Selecting relevant variables to avoid duplicated columns
 data_vis_force <- bind_cols(vis_results, data_force)
 data_vis_force <- dplyr::select(data_vis_force,
@@ -30,12 +30,12 @@ data_vis_force <- dplyr::select(data_vis_force,
 data_master <- data_vis_force
 head(data_master)
 
-# Saving data ----
+# 3. Saving data ----
 write.csv(data_master,
           "data/processed/04_data_master.csv",
           row.names = F)
 
-# Testing data ----
+# 4. Testing data ----
 data_master_test <- read.csv("data/processed/04_data_master.csv")
 head(data_master_test)
 

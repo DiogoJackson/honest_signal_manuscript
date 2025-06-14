@@ -4,13 +4,13 @@
 # Last update:
 # Wed May 17 13:24:42 2023 ------------------------------
 
-#Packages ----
+# Packages ----
 library(tidyverse)
 library(cowplot)
 library(ggpubr)
 library(colorspec)
 
-#1. import data ----
+# 1. import data ----
 data <- read.csv("data/processed/04_data_master.csv")
 head(data)
 str(data)
@@ -19,11 +19,11 @@ data_qt <- data %>%
   filter(vismodel == "Fiddler crab") %>% 
   filter(body_region == "Claw")
 
-#1.1. Import claws reflectance ----
+# 1.1. Import claws reflectance ----
 reflet <- read.csv("data/processed/01_reflet_claw_type.csv")
 reflet <- fixspec(reflet)
 
-#Comparations ----
+# 2. Comparations ----
 group <- list(c("Brachychelous","Leptochelous"))
 stat <- stat_compare_means(comparisons = group, tip.length=0.01,
                            label = "p.signif", 
@@ -33,7 +33,7 @@ stat <- stat_compare_means(comparisons = group, tip.length=0.01,
 #my_colors
 my_colors <- c("#ffb560","#18617b")
 
-# Plot graphs ----
+# 3. Plot graphs ----
 
 b2_plot <- ggplot(data_qt, aes(x = claw_type, y = mean_brightness)) +
   geom_boxplot(fill = "white", width = 0.4) +
@@ -88,14 +88,14 @@ claw <- reflet %>%
 claw
 
 
-# Plot grid ----
+# 4. Plot grid ----
 fig2 <- plot_grid(claw, sat_plot, b2_plot, ncol = 3, 
                   labels = "AUTO", 
                   align = "vh",
                   label_size = 15)
 fig2
 
-# Saving plot ----
+# 5. Saving plot ----
 ggsave(plot = fig2, 
        filename = "outputs/figures/04_Figure_2.png",
        width = 9.5, 
