@@ -16,7 +16,7 @@ data_qt <- data %>%  #qt = quela type
   filter(body_region == "Claw")
 
 # 2. Fitting model for claw weight ----------------------------------------------
-m1.1 <- glm(weight_mg ~ size + claw_type + saturation + mean_brightness + luminance, 
+m1.1 <- glm(weight_mg ~ size + claw_type + saturation + mean_brightness + luminance + chromatic_contrast, 
           family = "gaussian", data = data_qt)
 
 car::vif(m1.1) # colinearity among variables #1 = nao correlacionado, de 1 a 5 = moderadamente correlacionada, 
@@ -69,9 +69,9 @@ dev.off()
 # ✔ Ausência de autocorrelação – Resíduos aleatórios ao longo das observações.
 
 # 3. Fitting model for claw force -------------------------------------------------
-m2.1 <- glm(max_force ~ weight_mg + size + claw_type + saturation + mean_brightness, 
+m2.1 <- glm(max_force ~ weight_mg + size + claw_type + saturation + mean_brightness + chromatic_contrast, 
             family = Gamma(link = "log"), data = data_qt)
-summary(m1.1)
+summary(m2.1)
 car::vif(m2.1) # colinearity among variables 
 
 m2.2 <- glm(max_force ~ weight_mg + size + claw_type, 
