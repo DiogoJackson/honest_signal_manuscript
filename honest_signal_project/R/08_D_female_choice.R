@@ -41,4 +41,10 @@ anova(m1, m2, test = "LRT")
 m2 <- glm(female_choice ~ claw_type, data = dados_semNA, family = binomial(link = "logit"))
 summary(m2)
 
+# Save table ----
+m1_tidy <- broom::tidy(m1)
+write.csv(m1_tidy,
+          "outputs/tables/female_choice_result.csv",
+          row.names = F)
+
 # THE END ---------------------------------------------------------------------
