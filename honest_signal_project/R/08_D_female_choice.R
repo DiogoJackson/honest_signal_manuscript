@@ -23,6 +23,7 @@ data_agg <- aggregate(female_choice ~ claw_type,
 data_agg
 
 38/62*100
+24/62*100
 
 # 3. Binomial GLM ----
 dados_semNA <- remove_missing(data, vars = "claw_type") 

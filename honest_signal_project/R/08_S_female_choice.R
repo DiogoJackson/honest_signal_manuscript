@@ -20,6 +20,7 @@ data_agg <- aggregate(female_choice ~ claw_type,
                       FUN = sum, 
                       data = data)
 data_agg
+sum(data_agg$female_choice)
 
 # 3. Bar plot ----
 p1 <- ggplot(data_agg, aes(x = claw_type, y = female_choice, fill = claw_type)) +
