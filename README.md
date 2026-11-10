@@ -1,6 +1,8 @@
 
 # 🦀 Honest signals in fiddler crabs: females detect cheaters by claw shape 🦀
 
+https://doi.org/10.5281/zenodo.24118356
+
 **Authors:** Diogo J. A. Silva, Beatriz A. de Souza & Daniel M. A. Pessoa
 
 ---
